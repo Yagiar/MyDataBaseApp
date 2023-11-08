@@ -28,9 +28,10 @@ namespace MyDataBaseApp
             {
                 if (db.OpenConnection())
                 {
-                    string request = "SELECT * FROM users WHERE username = @username";
+                    string request = "SELECT * FROM users WHERE username = @username and hash_pwd = @pwd";
                     NpgsqlCommand npgSqlCommand = new NpgsqlCommand(request, db.Connection);
                     npgSqlCommand.Parameters.AddWithValue("@username", username.Text);
+                    npgSqlCommand.Parameters.AddWithValue("@pwd", CalculateMD5Hash(password.Text));
 
                     using (NpgsqlDataReader npgSqlDataReader = npgSqlCommand.ExecuteReader())
                     {
@@ -40,7 +41,7 @@ namespace MyDataBaseApp
                         }
                         else
                         {
-                            MessageBox.Show("Фейл с входом");
+                            MessageBox.Show("Неверный логин или пароль");
                         }
                     }
                 }
