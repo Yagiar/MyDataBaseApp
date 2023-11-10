@@ -33,10 +33,13 @@ C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBase
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\bin\Debug\System.ValueTuple.xml
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.csproj.AssemblyReference.cache
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.csproj.SuggestedBindingRedirects.cache
-C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.Form1.resources
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.Properties.Resources.resources
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.csproj.GenerateResource.cache
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.csproj.CoreCompileInputs.cache
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.csproj.CopyComplete
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.exe
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.pdb
+C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.authForm.resources
+C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.mainForm.resources
+C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.addProdForm.resources
+C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.addExerForm.resources
