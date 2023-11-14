@@ -26,7 +26,7 @@ namespace MyDataBaseApp
             {
                 if (db.OpenConnection())
                 {
-                    string select_request = "SELECT * FROM exersice WHERE name = @nameExer";
+                    string select_request = "SELECT * FROM get_exercise_table(@nameExer);";
                     NpgsqlCommand select_npgSqlCommand = new NpgsqlCommand(select_request, db.Connection);
                     select_npgSqlCommand.Parameters.AddWithValue("@nameExer", tbNameExer.Text);
 
@@ -39,20 +39,20 @@ namespace MyDataBaseApp
 
                     if (!userExists)
                     {
-
-                        string insert_request = "INSERT INTO exersice (name, mustle_group) VALUES (@nameExer, @mustle_group);";
-                        NpgsqlCommand insert_npgSqlCommand = new NpgsqlCommand(insert_request, db.Connection);
-                        insert_npgSqlCommand.Parameters.AddWithValue("@nameExer", tbNameExer.Text);
-                        insert_npgSqlCommand.Parameters.AddWithValue("@mustle_group", tbNameMusGroup.Text);
-
-                        int rowsAffected = insert_npgSqlCommand.ExecuteNonQuery();
-                        if (rowsAffected > 0)
+                        if (tbNameExer.Text != "" && tbNameMusGroup.Text != "")
                         {
-                            MessageBox.Show("Упражнение добавлено");
+                            string insert_request = "CALL insert_exercise(@nameExer, @mustle_group);";
+                            NpgsqlCommand insert_npgSqlCommand = new NpgsqlCommand(insert_request, db.Connection);
+                            insert_npgSqlCommand.Parameters.AddWithValue("@nameExer", tbNameExer.Text);
+                            insert_npgSqlCommand.Parameters.AddWithValue("@mustle_group", tbNameMusGroup.Text);
+
+                            int rowsAffected = insert_npgSqlCommand.ExecuteNonQuery();
+                            MessageBox.Show("Упражение добавлено.");
+
                         }
                         else
                         {
-                            MessageBox.Show("Ошибка добавления");
+                            MessageBox.Show("Ошибка добавления,заполните все поля.");
                         }
                     }
                     else

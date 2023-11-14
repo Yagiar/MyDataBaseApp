@@ -43,3 +43,5 @@ C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBase
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.mainForm.resources
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.addProdForm.resources
 C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.addExerForm.resources
+C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.addAteProgramm.resources
+C:\Users\otrix\OneDrive\Рабочий стол\Проект_РПБД\MyDataBaseApp\MyDataBaseApp\obj\Debug\MyDataBaseApp.addExerProgramm.resources

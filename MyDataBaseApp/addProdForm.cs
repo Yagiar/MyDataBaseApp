@@ -27,7 +27,7 @@ namespace MyDataBaseApp
             {
                 if (db.OpenConnection())
                 {
-                    string select_request = "SELECT * FROM product WHERE name = @nameProd";
+                    string select_request = "SELECT * FROM get_product_table(@nameProd)";
                     NpgsqlCommand select_npgSqlCommand = new NpgsqlCommand(select_request, db.Connection);
                     select_npgSqlCommand.Parameters.AddWithValue("@nameProd", tbNameProd.Text);
 
@@ -40,21 +40,18 @@ namespace MyDataBaseApp
 
                     if (!userExists)
                     {
-
-                        string insert_request = "INSERT INTO Product (name, pfc) VALUES (@name, @pfc);";
-                        NpgsqlCommand insert_npgSqlCommand = new NpgsqlCommand(insert_request, db.Connection);
-                        insert_npgSqlCommand.Parameters.AddWithValue("@name", tbNameProd.Text);
-                        insert_npgSqlCommand.Parameters.AddWithValue("@pfc", tbProteins.Text + "/" + tbFats.Text + "/" + tbUgly.Text);
-
-                        int rowsAffected = insert_npgSqlCommand.ExecuteNonQuery();
-                        if (rowsAffected > 0)
+                        if (tbNameProd.Text != "" && tbProteins.Text != "" && tbFats.Text != "" && tbUgly.Text != "")
                         {
+                            string insert_request = "CALL insert_product(@name, @pfc);";
+                            NpgsqlCommand insert_npgSqlCommand = new NpgsqlCommand(insert_request, db.Connection);
+                            insert_npgSqlCommand.Parameters.AddWithValue("@name", tbNameProd.Text);
+                            insert_npgSqlCommand.Parameters.AddWithValue("@pfc", tbProteins.Text + "/" + tbFats.Text + "/" + tbUgly.Text);
+
+                            insert_npgSqlCommand.ExecuteScalar();
                             MessageBox.Show("Продукт добавлен");
+
                         }
-                        else
-                        {
-                            MessageBox.Show("Ошибка добавления");
-                        }
+                        else { MessageBox.Show("Заполните поля!"); }
                     }
                     else
                     {

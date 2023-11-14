@@ -94,11 +94,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addAteProgramm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addAteProgramm.Designer.cs">
+      <DependentUpon>addAteProgramm.cs</DependentUpon>
+    </Compile>
     <Compile Include="addExerForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="addExerForm.Designer.cs">
       <DependentUpon>addExerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="addExerProgramm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="addExerProgramm.Designer.cs">
+      <DependentUpon>addExerProgramm.cs</DependentUpon>
     </Compile>
     <Compile Include="addProdForm.cs">
       <SubType>Form</SubType>
@@ -121,8 +133,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="addAteProgramm.resx">
+      <DependentUpon>addAteProgramm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="addExerForm.resx">
       <DependentUpon>addExerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="addExerProgramm.resx">
+      <DependentUpon>addExerProgramm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="addProdForm.resx">
       <DependentUpon>addProdForm.cs</DependentUpon>

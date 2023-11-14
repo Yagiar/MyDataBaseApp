@@ -52,8 +52,9 @@
             this.but_plan_workout.Name = "but_plan_workout";
             this.but_plan_workout.Size = new System.Drawing.Size(172, 45);
             this.but_plan_workout.TabIndex = 1;
-            this.but_plan_workout.Text = "Составить план питания";
+            this.but_plan_workout.Text = "Составить план тренировки";
             this.but_plan_workout.UseVisualStyleBackColor = true;
+            this.but_plan_workout.Click += new System.EventHandler(this.but_plan_workout_Click);
             // 
             // choose_day
             // 
