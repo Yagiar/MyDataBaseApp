@@ -45,13 +45,7 @@ namespace MyDataBaseApp
                     deleteButtonColumnWorkout.Text = "Удалить";
                     deleteButtonColumnWorkout.UseColumnTextForButtonValue = true;
 
-                    DataGridViewButtonColumn editButtonColumnWorkout = new DataGridViewButtonColumn();
-                    editButtonColumnWorkout.HeaderText = "Изменить";
-                    editButtonColumnWorkout.Text = "Изменить";
-                    editButtonColumnWorkout.UseColumnTextForButtonValue = true;
-
                     gridWorkout.Columns.Insert(0, deleteButtonColumnWorkout);
-                    gridWorkout.Columns.Insert(1, editButtonColumnWorkout);
 
                     gridAte.CellContentClick += GridAte_CellContentClick;
                     gridWorkout.CellContentClick += GridWorkout_CellContentClick;
@@ -118,10 +112,6 @@ namespace MyDataBaseApp
                         db.DeleteRecordByName("workout", name);
                         getGrids();
                         this.Refresh();
-                    }
-                    else if(command=="Изменить")
-                    {
-                        MessageBox.Show(name);
                     }
 
                 }

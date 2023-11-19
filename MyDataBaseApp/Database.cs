@@ -544,7 +544,7 @@ internal class Database
                 npgSqlCommand.Parameters.AddWithValue("@uniq_id", NpgsqlDbType.Integer, uniq_id);
                 npgSqlCommand.Parameters.AddWithValue("@userId", NpgsqlDbType.Integer, authForm.user_id);
 
-                npgSqlCommand.ExecuteNonQuery();
+                npgSqlCommand.ExecuteScalar();
             }
             else
             {
@@ -560,38 +560,6 @@ internal class Database
             CloseConnection();
         }
     }
-    public void UpdateRepsAndSets(int workoutId, int countRepetitions, int countApproaches, string dayOfWeek)
-    {
-        string request = "UPDATE Daily_workout SET count_repetitions = @countRepetitions, count_approaches = @countApproaches " +
-                         "WHERE id = @workoutId AND user_id = @userId AND day = @dayOfWeek";
-
-        try
-        {
-            if (OpenConnection())
-            {
-                NpgsqlCommand npgSqlCommand = new NpgsqlCommand(request, Connection);
-                npgSqlCommand.Parameters.AddWithValue("@workoutId", NpgsqlDbType.Integer, workoutId);
-                npgSqlCommand.Parameters.AddWithValue("@countRepetitions", NpgsqlDbType.Integer, countRepetitions);
-                npgSqlCommand.Parameters.AddWithValue("@countApproaches", NpgsqlDbType.Integer, countApproaches);
-                npgSqlCommand.Parameters.AddWithValue("@userId", NpgsqlDbType.Integer, authForm.user_id);
-                npgSqlCommand.Parameters.AddWithValue("@dayOfWeek", NpgsqlDbType.Text, dayOfWeek);
-
-                npgSqlCommand.ExecuteNonQuery();
-            }
-            else
-            {
-                MessageBox.Show("Нет соединения");
-            }
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Ошибка: " + ex.Message);
-        }
-        finally
-        {
-            CloseConnection();
-        }
-    }
-
+  
 
 }
