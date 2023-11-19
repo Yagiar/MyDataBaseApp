@@ -25,7 +25,16 @@ namespace MyDataBaseApp
         {
             if(days_collection.SelectedItems.Count == 1 && listBoxProducts.SelectedItems.Count == 1)
             {
+                string selectedProd = listBoxProducts.SelectedItem.ToString();
+                string[] parts = selectedProd.Split(',');
+                string nameProd = parts[0].Trim();
+                string day = days_collection.SelectedItem.ToString();
 
+                db.InsertPlan(db.GetIdByName("product", nameProd), day);
+            }
+            else
+            {
+                MessageBox.Show("Выберете все поля");
             }
         }
         private void addAteProg_Load(object sender, EventArgs e)

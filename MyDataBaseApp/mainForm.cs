@@ -12,9 +12,31 @@ namespace MyDataBaseApp
 {
     public partial class mainForm : Form
     {
+        private Database db;
         public mainForm()
         {
             InitializeComponent();
+            db = new Database("Host=pgdb.uni-dubna.ru;Username=student25;Password=Io_228_1337;Database=student25");
+        }
+        private void choose_day_Click(object sender, EventArgs e)
+        {
+            if (days_collection.SelectedItems.Count == 1 )
+            {
+                if (db.getGrid(days_collection.SelectedItem.ToString()) != null)
+                {
+                    planForm planForm = new planForm(days_collection.SelectedItem.ToString());
+                    planForm.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Нет данных");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберете день");
+            }
         }
         ~mainForm() { Application.Exit(); }
         // неяный курсор сделать общее количество продуктов(то есть выводить их, взяв неявным курсором select count(*) into...)
@@ -42,5 +64,12 @@ namespace MyDataBaseApp
             addExerProgramm.Show();
             this.Close();
         }
+
+        private void butExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        
     }
 }

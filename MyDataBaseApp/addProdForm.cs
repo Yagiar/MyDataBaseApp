@@ -23,54 +23,33 @@ namespace MyDataBaseApp
 
         private void but_add_prod_Click(object sender, EventArgs e)
         {
-            try
+            if (tbNameProd.Text != "" && tbProteins.Text != "" && tbFats.Text != "" && tbUgly.Text != "")
             {
-                if (db.OpenConnection())
+                if(authForm.IsNumeric(tbProteins.Text))
                 {
-                    string select_request = "SELECT * FROM get_product_table(@nameProd)";
-                    NpgsqlCommand select_npgSqlCommand = new NpgsqlCommand(select_request, db.Connection);
-                    select_npgSqlCommand.Parameters.AddWithValue("@nameProd", tbNameProd.Text);
-
-                    bool userExists = false;
-
-                    using (NpgsqlDataReader select_npgSqlDataReader = select_npgSqlCommand.ExecuteReader())
+                    if (authForm.IsNumeric(tbFats.Text))
                     {
-                        userExists = select_npgSqlDataReader.HasRows;
-                    }
-
-                    if (!userExists)
-                    {
-                        if (tbNameProd.Text != "" && tbProteins.Text != "" && tbFats.Text != "" && tbUgly.Text != "")
+                        if(authForm.IsNumeric(tbUgly.Text))
                         {
-                            string insert_request = "CALL insert_product(@name, @pfc);";
-                            NpgsqlCommand insert_npgSqlCommand = new NpgsqlCommand(insert_request, db.Connection);
-                            insert_npgSqlCommand.Parameters.AddWithValue("@name", tbNameProd.Text);
-                            insert_npgSqlCommand.Parameters.AddWithValue("@pfc", tbProteins.Text + "/" + tbFats.Text + "/" + tbUgly.Text);
-
-                            insert_npgSqlCommand.ExecuteScalar();
-                            MessageBox.Show("Продукт добавлен");
-
+                            string pfc = tbProteins.Text + "/" + tbFats.Text + "/" + tbUgly.Text;
+                            db.AddProductIntoTable(tbNameProd.Text, pfc);
                         }
-                        else { MessageBox.Show("Заполните поля!"); }
+                        else 
+                        { 
+                            MessageBox.Show("Введите ЧИСЛО углеводов");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Продукт уже существует");
+                        MessageBox.Show("Введите ЧИСЛО жиров");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Нет соединения");
-                }
+                    MessageBox.Show("Введите ЧИСЛО белков");
+                }     
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка: " + ex.Message);
-            }
-            finally
-            {
-                db.CloseConnection();
-            }
+            else { MessageBox.Show("Заполните поля!"); }
         }
 
         private void but_return_Click(object sender, EventArgs e)
@@ -79,6 +58,7 @@ namespace MyDataBaseApp
             main.Show();
             this.Close();
         }
+        
     }
 }
 

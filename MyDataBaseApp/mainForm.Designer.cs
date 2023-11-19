@@ -34,6 +34,7 @@
             this.days_collection = new System.Windows.Forms.ListBox();
             this.but_add_product = new System.Windows.Forms.Button();
             this.but_add_exersice = new System.Windows.Forms.Button();
+            this.butExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // but_plan_ate
@@ -64,6 +65,7 @@
             this.choose_day.TabIndex = 2;
             this.choose_day.Text = "Показать план";
             this.choose_day.UseVisualStyleBackColor = true;
+            this.choose_day.Click += new System.EventHandler(this.choose_day_Click);
             // 
             // days_collection
             // 
@@ -102,11 +104,22 @@
             this.but_add_exersice.UseVisualStyleBackColor = true;
             this.but_add_exersice.Click += new System.EventHandler(this.but_add_exersice_Click);
             // 
+            // butExit
+            // 
+            this.butExit.Location = new System.Drawing.Point(673, 369);
+            this.butExit.Name = "butExit";
+            this.butExit.Size = new System.Drawing.Size(110, 68);
+            this.butExit.TabIndex = 6;
+            this.butExit.Text = "Выход";
+            this.butExit.UseVisualStyleBackColor = true;
+            this.butExit.Click += new System.EventHandler(this.butExit_Click);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.butExit);
             this.Controls.Add(this.but_add_exersice);
             this.Controls.Add(this.but_add_product);
             this.Controls.Add(this.days_collection);
@@ -127,5 +140,6 @@
         private System.Windows.Forms.ListBox days_collection;
         private System.Windows.Forms.Button but_add_product;
         private System.Windows.Forms.Button but_add_exersice;
+        private System.Windows.Forms.Button butExit;
     }
 }

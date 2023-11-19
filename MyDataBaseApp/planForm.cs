@@ -1,5 +1,4 @@
-﻿using Npgsql;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,33 +10,33 @@ using System.Windows.Forms;
 
 namespace MyDataBaseApp
 {
-    public partial class addExerForm : Form
+    public partial class planForm : Form
     {
         private Database db;
-        public addExerForm()
+        string day;
+        public planForm(string dayOfWeek)
         {
             InitializeComponent();
+            day = dayOfWeek;
             db = new Database("Host=pgdb.uni-dubna.ru;Username=student25;Password=Io_228_1337;Database=student25");
         }
 
-        private void but_add_exer_Click(object sender, EventArgs e)
+        private void planForm_Load(object sender, EventArgs e)
         {
-            if(tbNameExer.Text!="" && tbNameMusGroup.Text!="")
+            DataGridView grid = db.getGrid(day);
+
+            if (grid != null)
             {
-                db.AddExerciseIntoTable(tbNameExer.Text, tbNameMusGroup.Text);
+                panelProducts.Controls.Add(grid);
             }
-            else
-            { 
-                MessageBox.Show("Заполните все поля");
-            }
+            labelBZU.Text = "Общее количество бжу: "+db.getBZU(day);
         }
 
-        private void but_return_Click(object sender, EventArgs e)
+        private void butReturn_Click(object sender, EventArgs e)
         {
             mainForm main = new mainForm();
             main.Show();
             this.Close();
         }
-
     }
 }

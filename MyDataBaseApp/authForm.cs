@@ -15,7 +15,11 @@ namespace MyDataBaseApp
     public partial class authForm : Form
     {
         private Database db;
-
+        public static int user_id = 0;
+        public static bool IsNumeric(string text)
+        {
+            return double.TryParse(text, out _);
+        }
         public authForm()
         {
             InitializeComponent();
@@ -24,99 +28,38 @@ namespace MyDataBaseApp
 
         private void auth_Click(object sender, EventArgs e)
         {
-            try
+            if (CheckTb())
             {
-                if (db.OpenConnection())
+                if (db.LoginUser(username.Text, CalculateMD5Hash(password.Text)))
                 {
-                    string request = "SELECT * FROM users WHERE username = @username and hash_pwd = @pwd";
-                    NpgsqlCommand npgSqlCommand = new NpgsqlCommand(request, db.Connection);
-                    npgSqlCommand.Parameters.AddWithValue("@username", username.Text);
-                    npgSqlCommand.Parameters.AddWithValue("@pwd", CalculateMD5Hash(password.Text));
-
-                    using (NpgsqlDataReader npgSqlDataReader = npgSqlCommand.ExecuteReader())
-                    {
-                        if (npgSqlDataReader.HasRows)
-                        {
-                            mainForm main = new mainForm();
-                            //MessageBox.Show("Вход успешен");
-                            main.Show();
-                            this.Hide();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Неверный логин или пароль");
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Нет соединения");
+                    user_id = db.GetIdByName("users",username.Text);
+                    mainForm main = new mainForm();
+                    main.Show();
+                    this.Hide();
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Ошибка: " + ex.Message);
-            }
-            finally
-            {
-                db.CloseConnection();
+                MessageBox.Show("Заполните все поля!");
             }
         }
 
         private void registration_Click(object sender, EventArgs e)
         {
-            try
+            if (CheckTb())
             {
-                if (db.OpenConnection())
-                {
-                    string select_request = "SELECT * FROM users WHERE username = @username";
-                    NpgsqlCommand select_npgSqlCommand = new NpgsqlCommand(select_request, db.Connection);
-                    select_npgSqlCommand.Parameters.AddWithValue("@username", username.Text);
-
-                    bool userExists = false;
-
-                    using (NpgsqlDataReader select_npgSqlDataReader = select_npgSqlCommand.ExecuteReader())
-                    {
-                        userExists = select_npgSqlDataReader.HasRows;
-                    }
-
-                    if (!userExists)
-                    {
-                        string insert_request = "INSERT INTO users (username, hash_pwd) VALUES (@username, @hash_pwd);";
-                        NpgsqlCommand insert_npgSqlCommand = new NpgsqlCommand(insert_request, db.Connection);
-                        insert_npgSqlCommand.Parameters.AddWithValue("@username", username.Text);
-                        insert_npgSqlCommand.Parameters.AddWithValue("@hash_pwd", CalculateMD5Hash(password.Text));
-
-                        int rowsAffected = insert_npgSqlCommand.ExecuteNonQuery();
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Регистрация успешна, можете войти");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Произошла ошибка при регистрации");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Пользователь с данным именем уже существует");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Нет соединения");
-                }
+                db.RegistrationUser(username.Text, CalculateMD5Hash(password.Text));
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Ошибка: " + ex.Message);
-            }
-            finally
-            {
-                db.CloseConnection();
+                MessageBox.Show("Заполните все поля!");
             }
         }
-
+        private bool CheckTb()
+        {
+            if (username.Text != "" && password.Text != "") { return true; }
+            else { return false; }
+        }
         public string CalculateMD5Hash(string input)
         {
             using (MD5 md5 = MD5.Create())
@@ -127,7 +70,7 @@ namespace MyDataBaseApp
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < hashBytes.Length; i++)
                 {
-                    sb.Append(hashBytes[i].ToString("x2")); // Преобразование в шестнадцатеричную строку
+                    sb.Append(hashBytes[i].ToString("x2"));
                 }
 
                 return sb.ToString();
