@@ -16,21 +16,29 @@ namespace MyDataBaseApp
         public mainForm()
         {
             InitializeComponent();
-            db = new Database("Host=pgdb.uni-dubna.ru;Username=student25;Password=Io_228_1337;Database=student25");
+            // db = new Database("Host=pgdb.uni-dubna.ru;Username=student25;Password=Io_228_1337;Database=student25");
+            db = new Database("Host=localhost;Username=postgres;Password=Io_228;Database=mydata");
         }
         private void choose_day_Click(object sender, EventArgs e)
         {
             if (days_collection.SelectedItems.Count == 1 )
             {
-                if (db.getGrid(days_collection.SelectedItem.ToString()) != null)
+                if (db.getGrid("ate",days_collection.SelectedItem.ToString()) != null)
                 {
-                    planForm planForm = new planForm(days_collection.SelectedItem.ToString());
-                    planForm.Show();
-                    this.Close();
+                    if (db.getGrid("workout", days_collection.SelectedItem.ToString()) != null)
+                    {
+                        planForm planForm = new planForm(days_collection.SelectedItem.ToString());
+                        planForm.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Нет данных в плане тренировок на выбранный день, добавьте");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Нет данных");
+                    MessageBox.Show("Нет данных в рационе питания на выбранный день, добавьте");
                 }
             }
             else

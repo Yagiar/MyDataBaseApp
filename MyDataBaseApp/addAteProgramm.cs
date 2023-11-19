@@ -17,8 +17,8 @@ namespace MyDataBaseApp
         public addAteProgramm()
         {
             InitializeComponent();
-            db = new Database("Host=pgdb.uni-dubna.ru;Username=student25;Password=Io_228_1337;Database=student25");
-
+            // db = new Database("Host=pgdb.uni-dubna.ru;Username=student25;Password=Io_228_1337;Database=student25");
+            db = new Database("Host=localhost;Username=postgres;Password=Io_228;Database=mydata");
         }
 
         private void butAddProgramm_Click(object sender, EventArgs e)

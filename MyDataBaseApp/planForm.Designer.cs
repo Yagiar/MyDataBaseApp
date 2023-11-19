@@ -38,14 +38,14 @@
             // 
             this.panelProducts.Location = new System.Drawing.Point(12, 77);
             this.panelProducts.Name = "panelProducts";
-            this.panelProducts.Size = new System.Drawing.Size(373, 278);
+            this.panelProducts.Size = new System.Drawing.Size(488, 361);
             this.panelProducts.TabIndex = 0;
             // 
             // panelExercise
             // 
-            this.panelExercise.Location = new System.Drawing.Point(414, 77);
+            this.panelExercise.Location = new System.Drawing.Point(506, 77);
             this.panelExercise.Name = "panelExercise";
-            this.panelExercise.Size = new System.Drawing.Size(374, 278);
+            this.panelExercise.Size = new System.Drawing.Size(642, 361);
             this.panelExercise.TabIndex = 1;
             // 
             // labelBZU
@@ -59,9 +59,9 @@
             // 
             // butReturn
             // 
-            this.butReturn.Location = new System.Drawing.Point(272, 363);
+            this.butReturn.Location = new System.Drawing.Point(12, 472);
             this.butReturn.Name = "butReturn";
-            this.butReturn.Size = new System.Drawing.Size(244, 75);
+            this.butReturn.Size = new System.Drawing.Size(131, 41);
             this.butReturn.TabIndex = 3;
             this.butReturn.Text = "Назад";
             this.butReturn.UseVisualStyleBackColor = true;
@@ -71,13 +71,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1160, 525);
             this.Controls.Add(this.butReturn);
             this.Controls.Add(this.labelBZU);
             this.Controls.Add(this.panelExercise);
             this.Controls.Add(this.panelProducts);
             this.Name = "planForm";
-            this.Text = "planForm";
+            this.Text = "План питания";
             this.Load += new System.EventHandler(this.planForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

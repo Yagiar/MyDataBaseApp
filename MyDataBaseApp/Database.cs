@@ -425,15 +425,30 @@ internal class Database
             CloseConnection();
         }
     }
-    public DataGridView getGrid(string dayOfWeek)
+    public DataGridView getGrid(string option , string dayOfWeek)
     {
+        string request="";
         DataTable dataTable = new DataTable();
         DataGridView dataGridView = new DataGridView();
+        switch (option)
+        {
+            case "workout":
+                {
+                    request = "SELECT * FROM public.get_user_workouts(@dayOfWeek, @userId)";
+                    break;
+                }
+            case "ate":
+                {
+                    request = "SELECT * FROM get_daily_nutrition(@dayOfWeek, @userId)";
+                    break;
+                }
+        }
+
         try
         {
             if (OpenConnection())
             {
-                string request = "SELECT * FROM get_daily_nutrition(@dayOfWeek, @userId)";
+                
                 NpgsqlCommand npgSqlCommand = new NpgsqlCommand(request, Connection);
                 npgSqlCommand.Parameters.AddWithValue("@dayOfWeek", NpgsqlDbType.Text,dayOfWeek);
                 npgSqlCommand.Parameters.AddWithValue("@userId", authForm.user_id);
@@ -503,4 +518,80 @@ internal class Database
             CloseConnection();
         }
     }
+    public void DeleteRecordByName(string option, string name)
+    {
+        string request = "";
+        int uniq_id=0;
+
+        switch (option)
+        {
+            case "workout":
+                request = "DELETE FROM Daily_workout WHERE exercise_id = @uniq_id AND user_id = @userId";
+                uniq_id = GetIdByName("exercise", name);
+                break;
+
+            case "ate":
+                request = "DELETE FROM Daily_products WHERE product_id = @uniq_id  AND user_id = @userId";
+                uniq_id = GetIdByName("product", name);
+                break;
+        }
+
+        try
+        {
+            if (OpenConnection())
+            {
+                NpgsqlCommand npgSqlCommand = new NpgsqlCommand(request, Connection);
+                npgSqlCommand.Parameters.AddWithValue("@uniq_id", NpgsqlDbType.Integer, uniq_id);
+                npgSqlCommand.Parameters.AddWithValue("@userId", NpgsqlDbType.Integer, authForm.user_id);
+
+                npgSqlCommand.ExecuteNonQuery();
+            }
+            else
+            {
+                MessageBox.Show("Нет соединения");
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Ошибка: " + ex.Message);
+        }
+        finally
+        {
+            CloseConnection();
+        }
+    }
+    public void UpdateRepsAndSets(int workoutId, int countRepetitions, int countApproaches, string dayOfWeek)
+    {
+        string request = "UPDATE Daily_workout SET count_repetitions = @countRepetitions, count_approaches = @countApproaches " +
+                         "WHERE id = @workoutId AND user_id = @userId AND day = @dayOfWeek";
+
+        try
+        {
+            if (OpenConnection())
+            {
+                NpgsqlCommand npgSqlCommand = new NpgsqlCommand(request, Connection);
+                npgSqlCommand.Parameters.AddWithValue("@workoutId", NpgsqlDbType.Integer, workoutId);
+                npgSqlCommand.Parameters.AddWithValue("@countRepetitions", NpgsqlDbType.Integer, countRepetitions);
+                npgSqlCommand.Parameters.AddWithValue("@countApproaches", NpgsqlDbType.Integer, countApproaches);
+                npgSqlCommand.Parameters.AddWithValue("@userId", NpgsqlDbType.Integer, authForm.user_id);
+                npgSqlCommand.Parameters.AddWithValue("@dayOfWeek", NpgsqlDbType.Text, dayOfWeek);
+
+                npgSqlCommand.ExecuteNonQuery();
+            }
+            else
+            {
+                MessageBox.Show("Нет соединения");
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Ошибка: " + ex.Message);
+        }
+        finally
+        {
+            CloseConnection();
+        }
+    }
+
+
 }

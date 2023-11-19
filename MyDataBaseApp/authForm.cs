@@ -23,7 +23,8 @@ namespace MyDataBaseApp
         public authForm()
         {
             InitializeComponent();
-            db = new Database("Host=pgdb.uni-dubna.ru;Username=student25;Password=Io_228_1337;Database=student25");
+            // db = new Database("Host=pgdb.uni-dubna.ru;Username=student25;Password=Io_228_1337;Database=student25");
+            db = new Database("Host=localhost;Username=postgres;Password=Io_228;Database=mydata");           // db = new Database("Host=localhost;Username=postgres;Password=Io_228;Database=mydata");
         }
 
         private void auth_Click(object sender, EventArgs e)
