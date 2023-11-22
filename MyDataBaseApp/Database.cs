@@ -560,6 +560,4 @@ internal class Database
             CloseConnection();
         }
     }
-  
-
 }
