@@ -1,0 +1,19 @@
+CREATE OR REPLACE PROCEDURE insert_exercise(
+    exercise_name text,
+    muscle_group text
+)
+AS $$
+BEGIN
+    INSERT INTO exercise (name, muscle_group) VALUES (exercise_name, muscle_group);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE insert_product(
+    product_name text,
+    pfc_info text
+)
+AS $$
+BEGIN
+    INSERT INTO product (name, pfc) VALUES (product_name, pfc_info);
+END;
+$$ LANGUAGE plpgsql;

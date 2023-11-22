@@ -1,0 +1,138 @@
+--------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION get_exercise_table(input_name text)
+RETURNS TABLE (
+    exer_name text,
+    muscle_group text
+)
+AS $$
+BEGIN
+    RETURN QUERY SELECT exercise.name, exercise.muscle_group FROM exercise where exercise.name = input_name;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM get_exercise_table('Жим лёжа');
+--------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION get_exercises()
+RETURNS TABLE (
+    exer_name text,
+    muscle_group text
+)
+AS $$
+BEGIN
+    RETURN QUERY SELECT exercise.name, exercise.muscle_group FROM exercise;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM get_exercises();
+--------------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION get_product_table(input_name text)
+RETURNS TABLE (
+    name_prod text,
+    pfc text
+)
+AS $$
+BEGIN
+    RETURN QUERY SELECT product.name, product.pfc FROM product WHERE product.name = input_name;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM get_product_table('Творог');
+--------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION get_products()
+RETURNS TABLE (
+    name_prod text,
+    pfc text
+)
+AS $$
+BEGIN
+    RETURN QUERY SELECT product.name, product.pfc FROM product;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM get_products();
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION get_daily_nutrition(day_of_week text, this_user_id integer)
+RETURNS TABLE (
+    product_name text,
+    pfc text
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        Product.name AS product_name,
+        Product.pfc
+    FROM
+        Daily_products
+    JOIN
+        Product ON Daily_products.product_id = Product.id
+    WHERE
+        Daily_products.user_id = this_user_id
+        AND Daily_products.day = day_of_week;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM get_daily_nutrition('Понедельник', 1);
+--------------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION get_total_bpu(day_of_week text, this_user_id integer)
+RETURNS text AS $$
+DECLARE
+    total_protein numeric := 0;
+    total_fat numeric := 0;
+    total_carbohydrates numeric := 0;
+    result_string text;
+BEGIN
+    SELECT
+        SUM(CAST(SPLIT_PART(Product.pfc, '/', 1) AS numeric)) INTO total_protein
+    FROM
+        Daily_products
+    JOIN
+        Product ON Daily_products.product_id = Product.id
+    WHERE
+       Daily_products.user_id = this_user_id
+        AND Daily_products.day = day_of_week;
+
+    SELECT
+        SUM(CAST(SPLIT_PART(Product.pfc, '/', 2) AS numeric)) INTO total_fat
+    FROM
+        Daily_products
+    JOIN
+        Product ON Daily_products.product_id = Product.id
+    WHERE
+       Daily_products.user_id = this_user_id
+        AND Daily_products.day = day_of_week;
+
+    SELECT
+        SUM(CAST(SPLIT_PART(Product.pfc, '/', 3) AS numeric)) INTO total_carbohydrates
+    FROM
+        Daily_products
+    JOIN
+        Product ON Daily_products.product_id = Product.id
+    WHERE
+       Daily_products.user_id = this_user_id
+        AND Daily_products.day = day_of_week;
+
+    result_string := total_protein || '/' || total_fat || '/' || total_carbohydrates;
+
+    RETURN result_string;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT get_total_bpu('Понедельник',1);
+--------------------------------------------------------------------------------------------------------------
+
+
+
+

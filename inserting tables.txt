@@ -1,0 +1,29 @@
+INSERT INTO users (username, hash_pwd)
+VALUES
+    ('Пользователь1', 'хэш_пароля_1'),
+    ('Пользователь2', 'хэш_пароля_2'),
+    ('Пользователь3', 'хэш_пароля_3');
+
+INSERT INTO exercise (name, muscle_group)
+VALUES
+    ('Упражнение 1', 'Группа мышц 1'),
+    ('Упражнение 2', 'Группа мышц 2'),
+    ('Упражнение 3', 'Группа мышц 1');
+
+INSERT INTO Product (name, pfc)
+VALUES
+    ('Продукт 1', 'Белки/Жиры/Углеводы'),
+    ('Продукт 2', 'Белки/Жиры/Углеводы'),
+    ('Продукт 3', 'Белки/Жиры/Углеводы');
+
+INSERT INTO Daily_workout (user_id, exercise_id, count_repetitions, count_approaches, day)
+VALUES
+    (1, 1, 10, 3, 'Понедельник'),
+    (1, 2, 8, 4, 'Понедельник'),
+    (2, 1, 12, 2, 'Вторник');
+
+INSERT INTO Daily_products (user_id, product_id, day)
+VALUES
+    (1, 1, 'Понедельник'),
+    (1, 2, 'Понедельник'),
+    (2, 1, 'Вторник');

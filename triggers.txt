@@ -1,0 +1,48 @@
+CREATE OR REPLACE FUNCTION process_daily_workout_audit() RETURNS TRIGGER AS
+$daily_workout_audit$
+BEGIN
+    IF (TG_OP = 'DELETE') THEN
+        INSERT INTO daily_workout_audit(operation, stamp, userid, workout_id, exercise_id, count_repetitions, count_approaches, day)
+        VALUES ('D', now(), current_user, OLD.id, OLD.exercise_id, OLD.count_repetitions, OLD.count_approaches, OLD.day);
+        RETURN OLD;
+    ELSIF (TG_OP = 'UPDATE') THEN
+        INSERT INTO daily_workout_audit(operation, stamp, userid, workout_id, exercise_id, count_repetitions, count_approaches, day)
+        VALUES ('U', now(), current_user, OLD.id, OLD.exercise_id, OLD.count_repetitions, OLD.count_approaches, OLD.day);
+        RETURN NEW;
+    ELSIF (TG_OP = 'INSERT') THEN
+        INSERT INTO daily_workout_audit(operation, stamp, userid, workout_id, exercise_id, count_repetitions, count_approaches, day)
+        VALUES ('I', now(), current_user, NEW.id, NEW.exercise_id, NEW.count_repetitions, NEW.count_approaches, NEW.day);
+        RETURN NEW;
+    END IF;
+    RETURN NULL;
+END;
+$daily_workout_audit$ LANGUAGE plpgsql;
+
+CREATE TRIGGER daily_workout_audit
+AFTER INSERT OR UPDATE OR DELETE ON Daily_workout
+FOR EACH ROW EXECUTE PROCEDURE process_daily_workout_audit();
+
+
+CREATE OR REPLACE FUNCTION process_daily_products_audit() RETURNS TRIGGER AS
+$daily_products_audit$
+BEGIN
+    IF (TG_OP = 'DELETE') THEN
+        INSERT INTO daily_products_audit(operation, stamp, userid, product_id, user_id, day)
+        VALUES ('D', now(), current_user, OLD.product_id, OLD.user_id, OLD.day);
+        RETURN OLD;
+    ELSIF (TG_OP = 'UPDATE') THEN
+        INSERT INTO daily_products_audit(operation, stamp, userid, product_id, user_id, day)
+        VALUES ('U', now(), current_user, OLD.product_id, OLD.user_id, OLD.day);
+        RETURN NEW;
+    ELSIF (TG_OP = 'INSERT') THEN
+        INSERT INTO daily_products_audit(operation, stamp, userid, product_id, user_id, day)
+        VALUES ('I', now(), current_user, NEW.product_id, NEW.user_id, NEW.day);
+        RETURN NEW;
+    END IF;
+    RETURN NULL;
+END;
+$daily_products_audit$ LANGUAGE plpgsql;
+
+CREATE TRIGGER daily_products_audit
+AFTER INSERT OR UPDATE OR DELETE ON Daily_products
+FOR EACH ROW EXECUTE PROCEDURE process_daily_products_audit();

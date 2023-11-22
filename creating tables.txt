@@ -1,0 +1,53 @@
+CREATE TABLE exercise (
+    id serial PRIMARY KEY,
+    name text,
+    muscle_group text
+);
+
+CREATE TABLE users (
+    id serial PRIMARY KEY,
+    username text,
+    hash_pwd text
+);
+
+CREATE TABLE Product (
+    id serial PRIMARY KEY,
+    name text,
+    pfc text
+);
+
+CREATE TABLE Daily_workout (
+    id serial PRIMARY KEY,
+    user_id integer REFERENCES users(id),
+    exercise_id integer REFERENCES exercise(id),
+    count_repetitions integer,
+    count_approaches integer,
+    day text
+);
+
+CREATE TABLE Daily_products (
+    id serial PRIMARY KEY,
+    user_id integer REFERENCES users(id),
+    product_id integer REFERENCES Product(id),
+    day text
+);
+
+CREATE TABLE daily_products_audit (
+    operation char(1),
+    stamp timestamp,
+    userid text,
+    product_id integer,
+    user_id integer,
+    day text
+);
+
+CREATE TABLE daily_workout_audit (
+    operation char(1),
+    stamp timestamp,
+    userid text,
+    workout_id integer,
+    exercise_id integer,
+    count_repetitions integer,
+    count_approaches integer,
+    day text
+);
