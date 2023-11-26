@@ -134,5 +134,27 @@ SELECT get_total_bpu('Понедельник',1);
 --------------------------------------------------------------------------------------------------------------
 
 
-
+CREATE OR REPLACE FUNCTION get_user_workouts(day_of_week text, this_user_id INT)
+RETURNS TABLE (
+    exercise_name text,
+    muscle_group text,
+    count_repetitions INT,
+    count_approaches INT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        exercise.name AS exercise_name,
+        exercise.muscle_group,
+        Daily_workout.count_repetitions,
+        Daily_workout.count_approaches
+    FROM
+        Daily_workout
+    JOIN
+        exercise ON Daily_workout.exercise_id = exercise.id
+    WHERE
+        Daily_workout.user_id = this_user_id
+        AND Daily_workout.day = day_of_week;
+END;
+$$ LANGUAGE plpgsql;
 
